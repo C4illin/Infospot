@@ -20,7 +20,7 @@ const analysis = (data, progress_ms) => {
     }, start * 1000 + 50);
 
     setTimeout(() => {
-      tatumsElem.style.backgroundColor = "white";
+      tatumsElem.style.backgroundColor = txtColor;
     }, end * 1000);
   });
 
@@ -37,7 +37,7 @@ const analysis = (data, progress_ms) => {
     }, start * 1000 + 50);
 
     setTimeout(() => {
-      beatsElem.style.backgroundColor = "white";
+      beatsElem.style.backgroundColor = txtColor;
     }, end * 1000);
   });
 
@@ -54,7 +54,7 @@ const analysis = (data, progress_ms) => {
     }, start * 1000 + 50);
 
     setTimeout(() => {
-      barsElem.style.backgroundColor = "white";
+      barsElem.style.backgroundColor = txtColor;
     }, end * 1000);
   });
 
