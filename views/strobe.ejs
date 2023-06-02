@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infospot | Strobe</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main id="strobe">
+    <div id="progresstext">0:00:00 / 3:00:00</div>
+  </main>
+  <script type="text/javascript" src="strobe.js"></script>
+  <script type="text/javascript">
+    let data = <%-JSON.stringify(data) %>
+    strobeData(data)
+  </script>
+</body>
+</html>

@@ -1,11 +1,28 @@
-const analysis = (data, progress_ms) => {
+const analysis = (data) => {
   const barsElem = document.getElementById("bars");
   const beatsElem = document.getElementById("beats");
   const tatumsElem = document.getElementById("tatums");
+  const sectionsElem = document.querySelectorAll("div#sections > div > div:first-child")
   const bars = data.bars;
   const beats = data.beats;
   const tatums = data.tatums;
   const segments = data.segments;
+  const sections = data.sections;
+
+  sections.forEach((section, index) => {
+    const start = section.start - progress / 1000;
+
+    if (start < 0) {
+      return;
+    }
+
+    setTimeout(() => {
+      const fill = [index+1, section.loudness, section.tempo, section.key, section.mode, section.time_signature + "/4"]
+      sectionsElem.forEach((elem, index) => {
+        elem.textContent = fill[index];
+      })
+    }, start * 1000);
+  });
 
   tatums.forEach((beat, index) => {
     const start = beat.start - progress / 1000;
@@ -190,5 +207,12 @@ const getData = (data) => {
   const progresstext = document.getElementById("progresstext");
 
   updateProgress(data.track.timestamp, data.track.item.duration_ms, progresstext);
-  analysis(data.analysis, data.track.progress_ms);
+  analysis(data.analysis);
+
+  // change favicon
+  const link = document.createElement("link");
+  link.type = "image/x-icon";
+  link.rel = "shortcut icon";
+  link.href = data.track.item.album.images[2].url
+  document.head.appendChild(link);
 }

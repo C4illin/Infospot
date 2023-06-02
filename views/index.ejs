@@ -1,139 +1,139 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Infospot | Spotify Web API Demo</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Infospot | Spotify Web API Demo</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+  <body>
+    <main>
+      <header>
+        <img
+          src="<%= data.track.item.album.images[0].url %>"
+          crossorigin="anonymous"
+        />
+        <div>
+          <h1><%=data.track.item.name%></h1>
+          <h3><%=data.track.item.album.name%></h3>
+          <h2>
+            <%= data.track.item.artists.map(artist=> artist.name).join(", ") %>
+          </h2>
+          <!-- <div id="progressbar"></div> -->
+          <div id="progresstext"></div>
+          <div id="analysis">
+            <div id="bars" class="circle">BARS</div>
+            <div id="beats" class="circle">BEATS</div>
+            <div id="tatums" class="circle">TATUMS</div>
+          </div>
+        </div>
+      </header>
+      <div id="chartDiv">
+        <div class="chartWrap">
+          <canvas id="chart1"></canvas>
+        </div>
+        <div class="chartWrap">
+          <canvas id="chart2"></canvas>
+        </div>
+      </div>
+      <% if (data.analysis.sections && data.analysis.sections.length > 0) { %>
+        <div id="sections" class="horizontal">
+          <div>
+            <div>1</div>
+            <div>Current Segment</div>
+          </div>
+          <div>
+            <div><%= data.analysis.sections[0].loudness %></div>
+            <div>Loudness</div>
+          </div>
+          <div>
+            <div><%= data.analysis.sections[0].tempo %></div>
+            <div>Tempo</div>
+          </div>
+          <div>
+            <div><%= data.analysis.sections[0].key %></div>
+            <div>Key</div>
+          </div>
+          <div>
+            <div><%= data.analysis.sections[0].mode %></div>
+            <div>Mode</div>
+          </div>
+          <div>
+            <div><%= data.analysis.sections[0].time_signature %>/4</div>
+            <div>Beats per bar</div>
+          </div>
+        </div>
+      <% } %>
 
-<body>
-  <main>
-    <header>
-      <img src="<%= data.track.item.album.images[1].url %>" crossorigin="anonymous">
-      <div>
-        <h1>
-          <%=data.track.item.name%>
-        </h1>
-        <h3>
-          <%=data.track.item.album.name%>
-        </h3>
-        <h2>
-          <%= data.track.item.artists.map(artist=> artist.name).join(", ") %>
-        </h2>
-        <!-- <div id="progressbar"></div> -->
-        <div id="progresstext"></div>
-      </div>
-    </header>
-    <div id="analysis">
-      <div id="bars" class="circle">
-        BARS
-      </div>
-      <div id="beats" class="circle">
-        BEATS
-      </div>
-      <div id="tatums" class="circle">
-        TATUMS
-      </div>
-    </div>
-    <div id="chartDiv">
-      <div class="chartWrap">
-        <canvas id="chart1"></canvas>
-      </div>
-      <div class="chartWrap">
-        <canvas id="chart2"></canvas>
-      </div>
-    </div>
-    <div id="features">
-      <div>
+      <div id="features" class="horizontal">
         <div>
-          <%= data.features.danceability %>
+          <div><%= data.features.danceability %></div>
+          <div>Danceability</div>
         </div>
-        <div>Danceability</div>
-      </div>
-      <div>
         <div>
-          <%= data.features.energy %>
+          <div><%= data.features.energy %></div>
+          <div>Energy</div>
         </div>
-        <div>Energy</div>
+        <div>
+          <div><%= data.features.speechiness %></div>
+          <div>Speechiness</div>
+        </div>
+        <div>
+          <div><%= data.features.acousticness %></div>
+          <div>Acousticness</div>
+        </div>
+        <div>
+          <div><%= data.features.instrumentalness %></div>
+          <div>Instrumentalness</div>
+        </div>
+        <div>
+          <div><%= data.features.liveness %></div>
+          <div>Liveness</div>
+        </div>
+        <div>
+          <div><%= data.features.valence %></div>
+          <div>Happiness</div>
+        </div>
+        <div>
+          <div><%= data.features.key %></div>
+          <div>Key</div>
+        </div>
+        <div>
+          <div><%= data.features.loudness %></div>
+          <div>Loudness</div>
+        </div>
+        <div>
+          <div><%= data.features.mode %></div>
+          <div>Mode</div>
+        </div>
+        <div>
+          <div><%= data.features.tempo %></div>
+          <div>Tempo</div>
+        </div>
+        <div>
+          <div><%= data.features.time_signature %>/4</div>
+          <div>Beats per bar</div>
+        </div>
       </div>
+      <a id="strobe" href="/strobe">Strobe</a>
+    </main>
 
-      <div>
-        <div>
-          <%= data.features.speechiness %>
-        </div>
-        <div>Speechiness</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.acousticness %>
-        </div>
-        <div>Acousticness</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.instrumentalness %>
-        </div>
-        <div>Instrumentalness</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.liveness %>
-        </div>
-        <div>Liveness</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.valence %>
-        </div>
-        <div>Happiness</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.key %>
-        </div>
-        <div>Key</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.loudness %>
-        </div>
-        <div>Loudness</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.mode %>
-        </div>
-        <div>Mode</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.tempo %>
-        </div>
-        <div>Tempo</div>
-      </div>
-      <div>
-        <div>
-          <%= data.features.time_signature %>/4
-        </div>
-        <div>Beats per bar</div>
-      </div>
-    </div>
-  </main>
-
-  <script type="text/javascript"
-    src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.umd.js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <script type="text/javascript" src="renderjson.js"></script>
-  <script type="text/javascript" src="script.js"></script>
-  <script type="text/javascript">
-    let data = <%-JSON.stringify(data) %>
-      document.body.appendChild(renderjson(data));
-    getData(data)
-  </script>
-</body>
-
-
+    <script
+      type="text/javascript"
+      src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.4.0/color-thief.umd.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/chart.js"
+    ></script>
+    <!-- <script type="text/javascript" src="renderjson.js"></script> -->
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript">
+      let data = <%-JSON.stringify(data) %>
+      // document.body.appendChild(renderjson(data));
+      getData(data)
+    </script>
+  </body>
 </html>

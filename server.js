@@ -62,13 +62,9 @@ app.get("/", (req, res) => {
   })
     .catch((err) => {
       console.log(err);
-      res.send("Play something on Spotify! And reload the page.");
+      res.send(`Play something on Spotify and go to <a href='/login'>${url}/login</a>`);
     });
 });
-
-app.get("/color", (req, res) => {
-
-})
 
 app.get("/login", (req, res) => {
   const scopes = [
@@ -99,6 +95,39 @@ app.get("/callback", (req, res) => {
     .catch((err) => {
       console.log(err);
       res.redirect("/");
+    });
+});
+
+app.get("/strobe", (req, res) => {
+  if (!spotifyApi.getAccessToken()) {
+    res.redirect("/login");
+    return;
+  }
+
+  let data = {};
+  spotifyApi.getMyCurrentPlayingTrack().then((track) => {
+    data.track = track.body;
+    let songId = track.body.item.id;
+    spotifyApi.getAudioFeaturesForTrack(songId).then((features) => {
+      data.features = features.body;
+    })
+      .catch((err) => {
+        console.log(err);
+        res.send("Error, try again.");
+      });
+
+    spotifyApi.getAudioAnalysisForTrack(songId).then((analysis) => {
+      data.analysis = analysis.body;
+      res.render("strobe", { "data": data });
+    })
+      .catch((err) => {
+        console.log(err);
+        res.send("Error, try again.");
+      })
+  })
+    .catch((err) => {
+      console.log(err);
+      res.send(`Play something on Spotify and go to <a href='/login'>${url}/login</a>`);
     });
 });
 
