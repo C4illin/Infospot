@@ -1,24 +1,25 @@
 const express = require("express");
 const cors = require("cors");
 const SpotifyWebApi = require("spotify-web-api-node");
-const livereload = require("livereload");
-const connectLiveReload = require("connect-livereload");
-const path = require("path");
 require("dotenv").config();
+
+// const livereload = require("livereload");
+// const connectLiveReload = require("connect-livereload");
+// const path = require("path");
 
 const app = express();
 const port = process.env.PORT || 3000;
 const url = process.env.URL || "http://localhost:3000";
 
 //Livereload code
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, "views"));
-liveReloadServer.server.once("connection", () => {
-  setTimeout(() => {
-    liveReloadServer.refresh("/");
-  }, 100);
-});
-app.use(connectLiveReload());
+// const liveReloadServer = livereload.createServer();
+// liveReloadServer.watch(path.join(__dirname, "views"));
+// liveReloadServer.server.once("connection", () => {
+//   setTimeout(() => {
+//     liveReloadServer.refresh("/");
+//   }, 100);
+// });
+// app.use(connectLiveReload());
 //End of livereload code
 
 app.use(express.static("public"));
