@@ -4,19 +4,18 @@ const strobe = (data) => {
 
   tatums.forEach((tatum) => {
     const start = tatum.start - progress / 1000;
-    const end = start + tatum.duration;
 
     if (start < 0) {
       return;
     }
 
     setTimeout(() => {
-      tatumsElem.style.backgroundColor = "black";
-    }, start * 1000 + 100);
+      tatumsElem.style.backgroundColor = "white";
+    }, start * 1000);
 
     setTimeout(() => {
-      tatumsElem.style.backgroundColor = "white";
-    }, end * 1000);
+      tatumsElem.style.backgroundColor = "black";
+    }, start * 1000 + 100);
   });
 }
 

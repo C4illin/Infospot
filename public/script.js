@@ -1,11 +1,23 @@
+let txtColor = "white";
+let progress = 0;
+
+function colorElements(timeData, element) {
+  timeData.forEach((beat) => {
+    const start = beat.start - progress / 1000;
+    if (start < 0) {
+      return;
+    }
+    setTimeout(() => {
+      element.style.backgroundColor = txtColor;
+    }, start * 1000);
+    setTimeout(() => {
+      element.style.backgroundColor = "";
+    }, start * 1000 + 100);
+  });
+}
+
 const analysis = (data) => {
-  const barsElem = document.getElementById("bars");
-  const beatsElem = document.getElementById("beats");
-  const tatumsElem = document.getElementById("tatums");
   const sectionsElem = document.querySelectorAll("div#sections > div > div:first-child")
-  const bars = data.bars;
-  const beats = data.beats;
-  const tatums = data.tatums;
   const segments = data.segments;
   const sections = data.sections;
 
@@ -24,56 +36,9 @@ const analysis = (data) => {
     }, start * 1000);
   });
 
-  tatums.forEach((beat, index) => {
-    const start = beat.start - progress / 1000;
-    const end = start + beat.duration;
-
-    if (start < 0) {
-      return;
-    }
-
-    setTimeout(() => {
-      tatumsElem.style.backgroundColor = "";
-    }, start * 1000 + 50);
-
-    setTimeout(() => {
-      tatumsElem.style.backgroundColor = txtColor;
-    }, end * 1000);
-  });
-
-  beats.forEach((beat, index) => {
-    const start = beat.start - progress / 1000;
-    const end = start + beat.duration;
-
-    if (start < 0) {
-      return;
-    }
-
-    setTimeout(() => {
-      beatsElem.style.backgroundColor = "";
-    }, start * 1000 + 50);
-
-    setTimeout(() => {
-      beatsElem.style.backgroundColor = txtColor;
-    }, end * 1000);
-  });
-
-  bars.forEach((bar, index) => {
-    const start = bar.start - progress / 1000;
-    const end = start + bar.duration;
-
-    if (start < 0) {
-      return;
-    }
-
-    setTimeout(() => {
-      barsElem.style.backgroundColor = "";
-    }, start * 1000 + 50);
-
-    setTimeout(() => {
-      barsElem.style.backgroundColor = txtColor;
-    }, end * 1000);
-  });
+  colorElements(data.tatums, document.getElementById("tatums"));
+  colorElements(data.beats, document.getElementById("beats"));
+  colorElements(data.bars, document.getElementById("bars"));
 
   const pitchesData = {
     labels: ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"],
@@ -156,7 +121,7 @@ const analysis = (data) => {
   });
 }
 
-let progress = 0;
+
 const updateProgress = (timestamp, duration, element) => {
   progress = (Date.now() - timestamp);
   element.textContent = `${formatMs(progress)} / ${formatMs(duration)}`;
@@ -180,8 +145,6 @@ const formatMs = (ms) => {
 
 const colorThief = new ColorThief();
 const img = document.querySelector('img');
-
-let txtColor = "white";
 
 const colorHandler = (color) => {
 
