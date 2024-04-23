@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const SpotifyWebApi = require("spotify-web-api-node");
+const SpotifyWebApi = require("spotify-web-api-node-plus");
 require("dotenv").config();
 
 // const livereload = require("livereload");
