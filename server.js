@@ -30,7 +30,7 @@ app.set("view engine", "ejs")
 const spotifyApi = new SpotifyWebApi({
   clientId: process.env.clientId,
   clientSecret: process.env.clientSecret,
-  redirectUri: url+"/callback",
+  redirectUri: `${url}/callback`,
 });
 
 app.get("/", (req, res) => {
@@ -39,10 +39,10 @@ app.get("/", (req, res) => {
     return;
   }
 
-  let data = {};
+  const data = {};
   spotifyApi.getMyCurrentPlayingTrack().then((track) => {
     data.track = track.body;
-    let songId = track.body.item.id;
+    const songId = track.body.item.id;
     spotifyApi.getAudioFeaturesForTrack(songId).then((features) => {
       data.features = features.body;
     })
@@ -53,7 +53,7 @@ app.get("/", (req, res) => {
 
     spotifyApi.getAudioAnalysisForTrack(songId).then((analysis) => {
       data.analysis = analysis.body;
-      res.render("index", { "data": data })
+      res.render("index", { data: data })
     })
       .catch((err) => {
         console.log(err);
@@ -104,10 +104,10 @@ app.get("/strobe", (req, res) => {
     return;
   }
 
-  let data = {};
+  const data = {};
   spotifyApi.getMyCurrentPlayingTrack().then((track) => {
     data.track = track.body;
-    let songId = track.body.item.id;
+    const songId = track.body.item.id;
     spotifyApi.getAudioFeaturesForTrack(songId).then((features) => {
       data.features = features.body;
     })
@@ -118,7 +118,7 @@ app.get("/strobe", (req, res) => {
 
     spotifyApi.getAudioAnalysisForTrack(songId).then((analysis) => {
       data.analysis = analysis.body;
-      res.render("strobe", { "data": data });
+      res.render("strobe", { data: data });
     })
       .catch((err) => {
         console.log(err);

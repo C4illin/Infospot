@@ -137,9 +137,9 @@ const updateProgress = (timestamp, duration, element) => {
 }
 
 const formatMs = (ms) => {
-  let minutes = Math.floor(ms / 60000);
-  let seconds = ((ms % 60000) / 1000).toFixed(0);
-  let milliseconds = ms % 1000;
+  const minutes = Math.floor(ms / 60000);
+  const seconds = ((ms % 60000) / 1000).toFixed(0);
+  const milliseconds = ms % 1000;
   return `${minutes}:${(seconds < 10 ? "0" : "")}${seconds}:${(milliseconds < 100 ? "0" : "")}${(milliseconds < 10 ? "0" : "")}${milliseconds}`;
 }
 
@@ -155,13 +155,13 @@ const colorHandler = (color) => {
     document.documentElement.style.setProperty('--text', 'white');
   }
 
-  document.documentElement.style.setProperty('--bkg', 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')');
+  document.documentElement.style.setProperty('--bkg', `rgb(${color[0]},${color[1]},${color[2]})`);
 }
 
 if (img.complete) {
   colorHandler(colorThief.getColor(img));
 } else {
-  img.addEventListener('load', function () {
+  img.addEventListener('load', () => {
     colorHandler(colorThief.getColor(img));
   });
 }
